@@ -1,15 +1,17 @@
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import chromadb
+from chromadb.utils import embedding_functions
+import os
 
 app = FastAPI(title="Multimodal RAG API", version="1.0.0")
 
-# FIX: Allow the React frontend to communicate with this API
+# Add this CORS middleware block
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # Allows all origins; restrict to frontend URL in production
+    allow_origins=["http://localhost:5173"], # Allows your React app
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["*"], # Allows POST, GET, etc.
     allow_headers=["*"],
 )
 # Initialize ChromaDB client (local persistent storage within the container)
