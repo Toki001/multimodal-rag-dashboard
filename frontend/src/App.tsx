@@ -102,13 +102,26 @@ export default function App() {
             </button>
           </form>
           
-          <h3 className="text-lg font-semibold mb-2">Raw Vector Results</h3>
-          {results ? (
-            <pre className="bg-gray-950 p-4 rounded text-xs overflow-auto max-h-64 border border-gray-700">
-              {JSON.stringify(results, null, 2)}
-            </pre>
+          <h3 className="text-lg font-semibold mb-4 text-purple-400">Search Results</h3>
+          {results && results.ids && results.ids[0].length > 0 ? (
+            <div className="grid grid-cols-1 gap-4">
+              {results.ids[0].map((id: string, index: number) => (
+                <div key={index} className="bg-gray-700 p-4 rounded border border-gray-600 flex flex-col gap-2">
+                  <span className="text-sm text-gray-400">Match #{index + 1}</span>
+                  <p className="font-medium text-white">File ID: <span className="text-blue-400">{id}</span></p>
+                  {/* Safely display metadata if it exists */}
+                  {results.metadatas && results.metadatas[0][index] && (
+                    <p className="text-sm text-gray-300">
+                      Description: {results.metadatas[0][index].description}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
           ) : (
-            <p className="text-gray-500 text-sm">Upload an image, then search its description to see the vector match.</p>
+            <p className="text-gray-500 text-sm bg-gray-900 p-4 rounded border border-gray-700">
+              {results ? "No matches found." : "Upload an image, then search to see the vector match."}
+            </p>
           )}
         </section>
 

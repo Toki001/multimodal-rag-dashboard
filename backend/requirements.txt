@@ -3,3 +3,7 @@ uvicorn
 chromadb
 openai
 python-multipart
+torch
+open-clip-torch
+pillow
+numpy

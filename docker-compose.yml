@@ -4,11 +4,15 @@ services:
   backend:
     build: ./backend
     ports:
-      - "8000:8000"
+      - "8080:8000"
     volumes:
       - ./backend:/app
+      - model_cache:/root/.cache
     environment:
       - CHROMA_DB_PATH=/app/chroma_data
+      - HF_TOKEN=${HF_TOKEN} 
+    env_file:               
+      - .env
     depends_on:
       - chromadb
 
@@ -33,3 +37,4 @@ services:
 
 volumes:
   chroma_data:
+  model_cache:
